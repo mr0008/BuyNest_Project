@@ -7,6 +7,7 @@ require('dotenv').config();
 const authRoutes    = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const cartRoutes    = require('./routes/cart');
+const paymentRoutes = require('./routes/payment');
 
 const app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/auth',     authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart',     cartRoutes);
+app.use('/api/payment',  paymentRoutes);
 
 // ─── Catch-all → serve index.html ───────────
 app.get(/^(?!\/api).*/, (req, res) => {
@@ -36,5 +38,5 @@ app.get(/^(?!\/api).*/, (req, res) => {
 // ─── Start Server ────────────────────────────
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`\n  🛒  ShopHub running at → http://localhost:${PORT}\n`);
+  console.log(`\n  🛒  BuyNest running at → http://localhost:${PORT}\n`);
 });

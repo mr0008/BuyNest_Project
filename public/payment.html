@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout – BuyNest</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<!-- ─── Navbar ──────────────────────────────── -->
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="nav-logo">Buy<span>Nest</span></a>
+    <div class="nav-actions">
+      <a href="/cart.html" class="nav-btn cart-btn">Cart</a>
+      <a href="/" class="btn btn-outline btn-sm">← Continue shopping</a>
+      <a href="/login.html" class="btn btn-primary btn-sm" id="nav-login-btn">Sign In</a>
+      <div id="nav-user-menu" style="display:none;align-items:center;gap:8px;">
+        <span style="font-size:.85rem;color:var(--text-muted)">Hi, <strong id="nav-user-name"></strong></span>
+        <button class="btn btn-ghost btn-sm" id="nav-logout-btn">Log out</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<main class="payment-page">
+  <div class="container payment-grid">
+    <section class="payment-card">
+      <div class="section-header">
+        <h1 class="section-title">Secure Checkout</h1>
+        <p class="text-muted">Enter your payment details to complete your order.</p>
+      </div>
+
+      <div id="payment-content">
+        <div class="payment-summary">
+          <div class="summary-row"><span>Items</span><span id="pay-items">0</span></div>
+          <div class="summary-row"><span>Subtotal</span><span id="pay-subtotal">RS.0.00</span></div>
+          <div class="summary-row"><span>Shipping</span><span id="pay-shipping">RS.5.00</span></div>
+          <div class="summary-row total-row"><span>Total</span><span id="pay-total">RS.0.00</span></div>
+        </div>
+
+        <form id="payment-form" class="payment-form">
+          <div class="form-group">
+            <label for="name">Name on card</label>
+            <input id="name" class="form-control" type="text" placeholder="Jane Doe" required>
+          </div>
+          <div class="form-group">
+            <label for="card-number">Card number</label>
+            <input id="card-number" class="form-control" type="text" inputmode="numeric" placeholder="4242 4242 4242 4242" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group half">
+              <label for="expiry">Expiry</label>
+              <input id="expiry" class="form-control" type="text" placeholder="MM/YY" required>
+            </div>
+            <div class="form-group half">
+              <label for="cvv">CVV</label>
+              <input id="cvv" class="form-control" type="text" inputmode="numeric" placeholder="123" required>
+            </div>
+          </div>
+          <button type="submit" id="pay-btn" class="btn btn-primary btn-full">Pay Now</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="payment-info">
+      <div class="payment-box">
+        <h3>Payment gateway</h3>
+        <p>This checkout page securely processes payments for your BuyNest order. We accept card payments and keep your details private.</p>
+        <ul class="payment-list">
+          <li>Secure connection</li>
+          <li>Fast order confirmation</li>
+          <li>Easy returns and support</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <p><strong>BuyNest</strong> &copy; 2023. All rights reserved.</p>
+  </div>
+</footer>
+
+<div id="toast-container"></div>
+<script src="/js/api.js"></script>
+<script src="/js/payment.js"></script>
+</body>
+</html>

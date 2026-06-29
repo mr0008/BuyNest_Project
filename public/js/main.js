@@ -125,10 +125,23 @@ function initSearch() {
   });
 }
 
+function initNavLinks() {
+  const navLinks = document.querySelectorAll('.nav-link');
+  if (!navLinks.length) return;
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      navLinks.forEach(item => item.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+}
+
 /* ─── Init ───────────────────────────────────── */
 document.addEventListener('DOMContentLoaded', async () => {
   await Promise.all([loadCategories(), loadProducts()]);
   initSearch();
+  initNavLinks();
   document.getElementById('close-product-modal')?.addEventListener('click', closeProductModal);
   document.getElementById('product-modal')?.addEventListener('click', (e) => {
     if (e.target === e.currentTarget) closeProductModal();

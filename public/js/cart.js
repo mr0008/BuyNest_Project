@@ -117,12 +117,7 @@ async function clearCart() {
 
 function checkout() {
   if (!cartItems.length) return;
-  showToast('Order placed successfully! Thank you 🎉', 'success');
-  setTimeout(async () => {
-    await Api.delete('/cart');
-    cartItems = [];
-    renderCart();
-  }, 1500);
+  window.location.href = '/payment.html';
 }
 
 document.addEventListener('DOMContentLoaded', () => {
