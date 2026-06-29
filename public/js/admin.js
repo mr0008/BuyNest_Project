@@ -17,7 +17,7 @@ async function loadStats() {
     products = prods;
     document.getElementById('stat-products').textContent = prods.length;
     document.getElementById('stat-value').textContent =
-      '$' + prods.reduce((s,p) => s + parseFloat(p.price), 0).toFixed(0);
+      'RS.' + prods.reduce((s,p) => s + parseFloat(p.price), 0).toFixed(0);
     const cats = [...new Set(prods.map(p=>p.category))];
     document.getElementById('stat-categories').textContent = cats.length;
     document.getElementById('stat-stock').textContent = prods.reduce((s,p)=>s+p.stock,0);
@@ -43,7 +43,7 @@ async function loadProductsTable() {
         <td><strong>${p.name}</strong></td>
         <td><span class="badge badge-blue">${p.category}</span></td>
         <td style="color:var(--primary);font-weight:700;font-family:'Syne',sans-serif">
-            $${parseFloat(p.price).toFixed(2)}</td>
+            RS.${parseFloat(p.price).toFixed(2)}</td>
         <td>
           <span class="badge ${p.stock > 10 ? 'badge-green' : p.stock > 0 ? 'badge-amber' : 'badge-red'}">
             ${p.stock}

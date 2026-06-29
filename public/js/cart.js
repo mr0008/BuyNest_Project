@@ -45,7 +45,7 @@ function renderCart() {
            onerror="this.src='https://placehold.co/80x80/1a1a1f/f59e0b?text=?'">
       <div class="cart-item-info">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-price">$${parseFloat(item.price).toFixed(2)}</div>
+        <div class="cart-item-price">RS.${parseFloat(item.price).toFixed(2)}</div>
         <div class="qty-ctrl">
           <button class="qty-btn" onclick="changeQty(${item.id}, ${item.quantity - 1})">−</button>
           <span class="qty-val">${item.quantity}</span>
@@ -54,7 +54,7 @@ function renderCart() {
       </div>
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:8px;">
         <span style="font-family:'Syne',sans-serif;font-weight:700;font-size:1.05rem;">
-          $${(parseFloat(item.price) * item.quantity).toFixed(2)}
+          RS.${(parseFloat(item.price) * item.quantity).toFixed(2)}
         </span>
         <button class="btn btn-danger btn-sm" onclick="removeItem(${item.id})">Remove</button>
       </div>
@@ -69,9 +69,9 @@ function updateSummary() {
   const shipping  = subtotal > 0 ? 5.00 : 0;
   const total     = subtotal + shipping;
 
-  document.getElementById('subtotal').textContent  = `$${subtotal.toFixed(2)}`;
-  document.getElementById('shipping').textContent  = shipping ? `$${shipping.toFixed(2)}` : 'Free';
-  document.getElementById('cart-total').textContent = `$${total.toFixed(2)}`;
+  document.getElementById('subtotal').textContent  = `Rs.${subtotal.toFixed(2)}`;
+  document.getElementById('shipping').textContent  = shipping ? `RS.${shipping.toFixed(2)}` : 'Free';
+  document.getElementById('cart-total').textContent = `RS.${total.toFixed(2)}`;
   document.getElementById('item-count').textContent =
     `${cartItems.reduce((s,i)=>s+i.quantity,0)} item(s)`;
   updateCartBadge();

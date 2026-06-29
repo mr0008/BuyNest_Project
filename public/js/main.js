@@ -69,7 +69,7 @@ function renderProducts() {
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${(p.description||'').slice(0,80)}${p.description?.length>80?'…':''}</div>
         <div class="product-footer">
-          <span class="product-price">$${parseFloat(p.price).toFixed(2)}</span>
+          <span class="product-price">RS.${parseFloat(p.price).toFixed(2)}</span>
           <button class="add-cart-btn" onclick="event.stopPropagation();addToCart(${p.id})">
             + Cart
           </button>
@@ -85,7 +85,7 @@ function openProduct(id) {
   document.getElementById('modal-img').src         = p.image_url || '';
   document.getElementById('modal-name').textContent = p.name;
   document.getElementById('modal-desc').textContent = p.description || '';
-  document.getElementById('modal-price').textContent = `$${parseFloat(p.price).toFixed(2)}`;
+  document.getElementById('modal-price').textContent = `RS.${parseFloat(p.price).toFixed(2)}`;
   document.getElementById('modal-stock').textContent = p.stock > 0 ? `${p.stock} in stock` : 'Out of stock';
   document.getElementById('modal-cat').textContent  = p.category;
   document.getElementById('modal-add-btn').onclick  = () => { addToCart(id); closeProductModal(); };
