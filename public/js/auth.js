@@ -1,7 +1,10 @@
 /* ─── ShopHub – Auth JS ──────────────────────── */
 
 /* Redirect if already logged in */
-if (Api.isLoggedIn()) window.location.href = '/';
+if (Api.isLoggedIn()) {
+  const user = Api.getUser();
+  window.location.href = user?.role === 'admin' ? '/admin.html' : '/';
+}
 
 /* ─── Login ───────────────────────────────────── */
 const gmailBtn = document.getElementById('gmail-login-btn');
