@@ -15,6 +15,7 @@
 
     <div class="nav-links">
       <a href="#home" class="nav-link active">Home</a>
+      <a href="#products" class="nav-link" data-nav-section="products">Products</a>
       <a href="#about" class="nav-link">About Us</a>
       <a href="#contact" class="nav-link">Contact Us</a>
       <a href="#help" class="nav-link">Help</a>
@@ -70,7 +71,7 @@
 
 
 <!-- ─── Shop Section ─────────────────────────── -->
-<section style="padding: 0 0 80px;">
+<section id="products" style="padding: 0 0 80px;">
   <div class="container">
     <!-- Shopping Photos Marquee (left → right, slow) -->
     <div class="photo-marquee" aria-hidden="false">
@@ -82,7 +83,7 @@
         <img class="marquee-image" src="./New folder/Huawei_watch_fit_Special_Edition-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
         <img class="marquee-image" src="./New folder/CrossBeats_Roar_2.0_Special_Edition-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
         <img class="marquee-image" src="./New folder/Honor_X9_5G-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
-        <img class="marquee-image" src="./New folder/Apple_AirPods_Pro_2nd_Generation-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
+        <img class="marquee-image" src="./New folder/Sony_Xperia_10_VII-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
           <div class="marquee-group">
             <img class="marquee-image" src="./New folder/Acer_Nitro_17-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
             <img class="marquee-image" src="./New folder/Adidas_Gazelle_Bold_Women_shoes-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
@@ -103,6 +104,17 @@
             <img class="marquee-image" src="./New folder/MSI_Katana_17-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
             <img class="marquee-image" src="./New folder/Huawei_GT_5_Pro-removebg-preview.png" alt="shopping photo" loading="lazy" onerror="this.onerror=null;this.src='/uploads/placeholder.svg'">
           </div>
+      </div>
+    </div>
+
+    <div class="products-toolbar">
+      <div class="section-title">Browse by <span>Category</span></div>
+      <div class="products-toolbar-actions">
+        <label class="sort-label" for="product-sort">Sort:</label>
+        <select id="product-sort" class="sort-select">
+          <option value="newest">Newest Added</option>
+          <option value="oldest">Oldest Added</option>
+        </select>
       </div>
     </div>
 

@@ -3,6 +3,8 @@
 let allProducts  = [];
 let activeCategory = 'All';
 let searchQuery    = '';
+let showAllProducts = false;
+let sortOrder = 'newest';
 
 async function loadCategories() {
   try {
@@ -30,6 +32,7 @@ async function loadProducts() {
   grid.innerHTML = '<div class="spinner"></div>';
   try {
     allProducts = await Api.get('/products');
+    showAllProducts = false;
     renderProducts();
   } catch {
     grid.innerHTML = `<p class="text-muted text-center">Failed to load products.</p>`;
@@ -47,6 +50,16 @@ function renderProducts() {
       p.description?.toLowerCase().includes(searchQuery);
     return matchCat && matchSearch;
   });
+
+  if (!showAllProducts) {
+    filtered = [...filtered].sort(() => Math.random() - 0.5).slice(0, 5);
+  } else {
+    filtered = [...filtered].sort((a, b) => {
+      const aDate = new Date(a.created_at || 0).getTime();
+      const bDate = new Date(b.created_at || 0).getTime();
+      return sortOrder === 'oldest' ? aDate - bDate : bDate - aDate;
+    });
+  }
 
   if (!filtered.length) {
     grid.innerHTML = `
@@ -125,12 +138,32 @@ function initSearch() {
   });
 }
 
+function showAllProductsView() {
+  showAllProducts = true;
+  renderProducts();
+  document.getElementById('products')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+function initSortSelector() {
+  const select = document.getElementById('product-sort');
+  if (!select) return;
+  select.addEventListener('change', (event) => {
+    sortOrder = event.target.value;
+    renderProducts();
+  });
+}
+
 function initNavLinks() {
   const navLinks = document.querySelectorAll('.nav-link');
   if (!navLinks.length) return;
 
   navLinks.forEach(link => {
-    link.addEventListener('click', () => {
+    link.addEventListener('click', (event) => {
+      if (link.dataset.navSection === 'products') {
+        event.preventDefault();
+        showAllProductsView();
+      }
+
       navLinks.forEach(item => item.classList.remove('active'));
       link.classList.add('active');
     });
@@ -141,6 +174,7 @@ function initNavLinks() {
 document.addEventListener('DOMContentLoaded', async () => {
   await Promise.all([loadCategories(), loadProducts()]);
   initSearch();
+  initSortSelector();
   initNavLinks();
   document.getElementById('close-product-modal')?.addEventListener('click', closeProductModal);
   document.getElementById('product-modal')?.addEventListener('click', (e) => {
