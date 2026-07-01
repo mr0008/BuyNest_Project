@@ -5,6 +5,7 @@ const path     = require('path');
 require('dotenv').config();
 
 const authRoutes    = require('./routes/auth');
+const profileRoutes = require('./routes/profile');
 const productRoutes = require('./routes/products');
 const cartRoutes    = require('./routes/cart');
 const paymentRoutes = require('./routes/payment');
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ─── API Routes ─────────────────────────────
 app.use('/api/auth',     authRoutes);
+app.use('/api/profile',  profileRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/cart',     cartRoutes);
 app.use('/api/payment',  paymentRoutes);

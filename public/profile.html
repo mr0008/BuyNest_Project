@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile – BuyNest</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/profile.css">
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="container">
+    <a href="/" class="nav-logo">Buy<span>Nest</span></a>
+    <div class="nav-actions" style="gap:12px;align-items:center;display:flex;flex-wrap:wrap;">
+      <a href="/" class="btn btn-ghost btn-sm">Shop</a>
+      <button class="btn btn-ghost btn-sm theme-toggle-btn" data-theme-toggle aria-label="Toggle dark mode">
+        <span class="theme-icon">🌙</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="profile-page">
+  <section class="container profile-card">
+    <div class="profile-header">
+      <div class="profile-avatar" id="profile-avatar">👤</div>
+      <div>
+        <h1 id="profile-name">User Name</h1>
+        <p id="profile-email">user@example.com</p>
+      </div>
+    </div>
+
+    <div class="profile-details">
+      <div class="profile-detail-item">
+        <span class="profile-detail-label">Orders</span>
+        <span class="profile-detail-value" id="profile-orders-count">0</span>
+      </div>
+      <div class="profile-detail-item">
+        <span class="profile-detail-label">Member since</span>
+        <span class="profile-detail-value" id="profile-created-date">—</span>
+      </div>
+    </div>
+
+    <div class="profile-orders" id="profile-orders">
+      <h2>Recent Orders</h2>
+      <div id="orders-list" class="orders-list">
+        <p class="text-muted">No orders yet.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast-container"></div>
+<script src="/js/api.js"></script>
+<script src="/js/theme.js"></script>
+<script src="/js/profile.js"></script>
+</body>
+</html>
