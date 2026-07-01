@@ -5,6 +5,17 @@ if (Api.isLoggedIn()) window.location.href = '/';
 
 /* ─── Login ───────────────────────────────────── */
 const gmailBtn = document.getElementById('gmail-login-btn');
+const googleStatusEl = document.getElementById('google-status');
+
+function setGoogleStatus(message, isError = false) {
+  if (!googleStatusEl) return;
+  googleStatusEl.textContent = message || '';
+  googleStatusEl.style.color = isError ? '#dc2626' : 'var(--text-muted)';
+}
+
+function isValidGoogleClientId(value) {
+  return typeof value === 'string' && value.trim() !== '' && !/your[_-]?google[_-]?client[_-]?id|example|placeholder/i.test(value) && /\.apps\.googleusercontent\.com$/i.test(value);
+}
 
 async function handleGoogleLogin(response) {
   try {
@@ -25,28 +36,51 @@ async function handleGoogleLogin(response) {
   }
 }
 
-if (gmailBtn) {
-  gmailBtn.addEventListener('click', () => {
-    const clientId = window.GOOGLE_CLIENT_ID || '';
-    if (!clientId || clientId === '__GOOGLE_CLIENT_ID__') {
-      showToast('Add your Google Client ID in .env to enable Gmail sign-in.', 'error');
-      return;
-    }
-    if (!window.google?.accounts?.id) {
-      showToast('Google sign-in script is still loading. Please try again in a moment.', 'error');
-      return;
-    }
-    window.google.accounts.id.initialize({
-      client_id: clientId,
-      callback: handleGoogleLogin,
-      ux_mode: 'popup'
-    });
-    window.google.accounts.id.prompt((notification) => {
-      if (notification.isNotDisplayed() || notification.isSkippedMoment()) {
-        showToast('Google account chooser did not open. Please try again.', 'info');
-      }
-    });
+async function initGoogleButton() {
+  if (!gmailBtn) return;
+
+  try {
+    const res = await fetch('/api/auth/google-config');
+    const data = await res.json();
+    window.GOOGLE_CLIENT_ID = data.clientId || '';
+  } catch {
+    window.GOOGLE_CLIENT_ID = '';
+  }
+
+  if (!window.google?.accounts?.id) {
+    setGoogleStatus('Loading Google sign-in…', false);
+    window.setTimeout(initGoogleButton, 400);
+    return;
+  }
+
+  if (!isValidGoogleClientId(window.GOOGLE_CLIENT_ID)) {
+    setGoogleStatus('Google sign-in is not configured yet. Add a valid Google Client ID to the server environment.', true);
+    gmailBtn.innerHTML = '<div style="padding:10px 16px;border:1px solid #d1d5db;border-radius:999px;color:#6b7280;background:#fff;">Google sign-in unavailable</div>';
+    return;
+  }
+
+  setGoogleStatus('');
+  window.google.accounts.id.initialize({
+    client_id: window.GOOGLE_CLIENT_ID,
+    callback: handleGoogleLogin,
+    ux_mode: 'popup'
   });
+
+  window.google.accounts.id.renderButton(gmailBtn, {
+    theme: 'outline',
+    size: 'large',
+    text: 'continue_with',
+    shape: 'pill',
+    width: 320
+  });
+}
+
+if (gmailBtn) {
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initGoogleButton);
+  } else {
+    initGoogleButton();
+  }
 }
 
 const loginForm = document.getElementById('login-form');

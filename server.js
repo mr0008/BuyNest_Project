@@ -30,6 +30,12 @@ app.use('/api/products', productRoutes);
 app.use('/api/cart',     cartRoutes);
 app.use('/api/payment',  paymentRoutes);
 
+app.get('/api/auth/google-config', (_req, res) => {
+  const clientId = process.env.GOOGLE_CLIENT_ID || '';
+  const isPlaceholder = !clientId || /your[_-]?google[_-]?client[_-]?id|example|placeholder/i.test(clientId);
+  res.json({ clientId: isPlaceholder ? '' : clientId });
+});
+
 // ─── Catch-all → serve index.html ───────────
 app.get(/^(?!\/api).*/, (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));

@@ -8,7 +8,18 @@ if (!currentUser || currentUser.role !== 'admin') {
 }
 
 let products = [];
+let orders = [];
 let editingId = null;
+
+const orderStatusLabels = {
+  pending: 'Pending',
+  processing: 'Processing',
+  shipped: 'Shipped',
+  delivered: 'Delivered',
+  cancelled: 'Cancelled'
+};
+
+const orderStatusOptions = ['pending', 'processing', 'shipped', 'delivered', 'cancelled'];
 
 /* ─── Load Stats ─────────────────────────────── */
 async function loadStats() {
@@ -57,6 +68,47 @@ async function loadProductsTable() {
     `).join('');
   } catch (err) {
     tbody.innerHTML = `<tr><td colspan="7">${err.message}</td></tr>`;
+  }
+}
+
+/* ─── Load Orders ───────────────────────────── */
+async function loadOrdersTable() {
+  const tbody = document.getElementById('orders-tbody');
+  tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">Loading…</td></tr>';
+
+  try {
+    orders = await Api.get('/payment/orders');
+    if (!orders.length) {
+      tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">No orders yet</td></tr>';
+      return;
+    }
+
+    tbody.innerHTML = orders.map(order => `
+      <tr>
+        <td><strong>#${order.id}</strong></td>
+        <td>${order.customer_name || order.billing_name || 'Customer'}</td>
+        <td>${order.items_summary || '—'}</td>
+        <td style="color:var(--primary);font-weight:700;font-family:'Syne',sans-serif">RS.${parseFloat(order.total_amount).toFixed(2)}</td>
+        <td>${new Date(order.created_at).toLocaleString()}</td>
+        <td>
+          <select class="form-input" style="min-width:140px" onchange="updateOrderStatus(${order.id}, this.value)">
+            ${orderStatusOptions.map(status => `<option value="${status}" ${order.status === status ? 'selected' : ''}>${orderStatusLabels[status]}</option>`).join('')}
+          </select>
+        </td>
+      </tr>
+    `).join('');
+  } catch (err) {
+    tbody.innerHTML = `<tr><td colspan="6">${err.message}</td></tr>`;
+  }
+}
+
+async function updateOrderStatus(id, status) {
+  try {
+    await Api.put(`/payment/orders/${id}/status`, { status });
+    showToast('Order status updated ✅', 'success');
+    loadOrdersTable();
+  } catch (err) {
+    showToast(err.message, 'error');
   }
 }
 
@@ -160,6 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('admin-name').textContent = currentUser.name.split(' ')[0];
   loadStats();
   loadProductsTable();
+  loadOrdersTable();
 
   document.getElementById('add-product-btn')?.addEventListener('click', openAddModal);
   document.getElementById('close-modal-btn')?.addEventListener('click', closeModal);

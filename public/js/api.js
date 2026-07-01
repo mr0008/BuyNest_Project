@@ -4,7 +4,14 @@ const API_BASE = '/api';
 
 const Api = {
   getToken: ()  => localStorage.getItem('token'),
-  getUser:  ()  => JSON.parse(localStorage.getItem('user') || 'null'),
+  getUser: () => {
+    try {
+      return JSON.parse(localStorage.getItem('user') || 'null');
+    } catch {
+      localStorage.removeItem('user');
+      return null;
+    }
+  },
   isAdmin:  ()  => Api.getUser()?.role === 'admin',
   isLoggedIn:() => !!Api.getToken(),
 
@@ -30,10 +37,29 @@ const Api = {
 
   async request(method, path, body) {
     const opts = { method, headers: Api.headers() };
-    if (body) opts.body = JSON.stringify(body);
+    if (body !== undefined) opts.body = JSON.stringify(body);
     const res = await fetch(API_BASE + path, opts);
-    const data = await res.json();
-    if (!res.ok) throw new Error(data.error || 'Request failed');
+    const contentType = res.headers.get('content-type') || '';
+    let data = null;
+
+    try {
+      data = contentType.includes('application/json') ? await res.json() : await res.text();
+    } catch {
+      data = null;
+    }
+
+    if (!res.ok) {
+      const message = typeof data === 'object' && data ? (data.error || 'Request failed') : (data || 'Request failed');
+      if (res.status === 401) {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        if (!window.location.pathname.includes('/login') && !window.location.pathname.includes('/register')) {
+          window.location.href = '/login.html';
+        }
+      }
+      throw new Error(message);
+    }
+
     return data;
   },
 

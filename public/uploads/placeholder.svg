@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="100%" height="100%" fill="#f3f4f6"/>
+  <g transform="translate(80,140)">
+    <rect width="640" height="320" rx="16" fill="#fff" stroke="#e5e7eb"/>
+    <text x="320" y="120" font-family="Arial, Helvetica, sans-serif" font-size="36" fill="#374151" text-anchor="middle">Shopping Photo</text>
+    <text x="320" y="170" font-family="Arial, Helvetica, sans-serif" font-size="18" fill="#6b7280" text-anchor="middle">Placeholder image (offline)</text>
+  </g>
+</svg>

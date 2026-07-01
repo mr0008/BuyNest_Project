@@ -598,6 +598,39 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   font-family: 'DM Sans', sans-serif;
 }
 .add-cart-btn:hover { background: var(--primary-dark); transform: scale(1.04); }
+/* ─── Photo Marquee (slow left → right) ───────────────── */
+.photo-marquee { overflow: hidden; width: 100%; margin: 18px 0 26px; height: 520px; }
+.marquee-track { display: flex; gap: 18px; align-items: center; will-change: transform; animation: marqueeLeft 55s linear infinite; width: max-content; }
+.marquee-group { display: flex; gap: 18px; align-items: center; }
+.marquee-image { height: 440px; width: auto; border-radius: 12px; object-fit: cover; box-shadow: var(--shadow); border: 1px solid var(--border); display: block; }
+
+@keyframes marqueeLeft {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+@media (max-width: 900px) {
+  .photo-marquee { height: 400px; }
+  .marquee-image { height: 340px; }
+}
+
+@media (max-width: 600px) {
+  .photo-marquee { height: 280px; }
+  .marquee-image { height: 220px; }
+}
+
+/* Subtle entrance animation */
+.animate-up { animation: fadeUp .6s ease both; }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Slight hover lift for cards */
+.info-card:hover, .product-card:hover { transform: translateY(-6px); transition: transform .28s var(--transition); }
+
+/* Gallery modal */
+/* gallery removed */
 
 /* ─── Category Filter ───────────────────────── */
 .category-filter {

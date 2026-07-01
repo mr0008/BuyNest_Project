@@ -71,8 +71,32 @@
       </div>
     </div>
 
+    <!-- Orders Table -->
+    <div class="table-wrap" style="margin-top:24px">
+      <div class="table-toolbar">
+        <div class="table-title">Customer Orders</div>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>Order ID</th>
+              <th>Customer</th>
+              <th>Items</th>
+              <th>Total</th>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="orders-tbody">
+            <tr><td colspan="6" style="text-align:center;padding:40px;color:var(--text-muted)">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
     <!-- Products Table -->
-    <div class="table-wrap">
+    <div class="table-wrap" style="margin-top:24px">
       <div class="table-toolbar">
         <div class="table-title">Products</div>
         <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
